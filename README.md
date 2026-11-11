@@ -68,7 +68,19 @@ linear regression.
 
 ## Model files
 
-The model artifacts and datasets are not included in this README-only commit.
-The trained model bundle records the linear-regression coefficients and
-random-forest metadata. The fitted random-forest estimator is a separate
-Joblib artifact and requires a compatible scikit-learn installation to load.
+- `wind_model.json` — linear-regression coefficients and random-forest metadata.
+- `wind_random_forest.joblib` — fitted random-forest estimator, saved with
+  Joblib compression.
+
+The source observations, prepared dataset, and prediction table are not included.
+Load the fitted estimator with scikit-learn 1.9.1 and Joblib:
+
+```python
+import joblib
+
+model = joblib.load("wind_random_forest.joblib")
+```
+
+Provide input columns in the feature order documented above. The JSON file
+records the model settings and the negative-prediction policy; clip predictions
+below zero to zero when applying either regression model.
